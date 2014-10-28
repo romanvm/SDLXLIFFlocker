@@ -15,7 +15,7 @@ namespace SDLXLIFFlocker
     {
         public MainForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void selectFolder(object sender, EventArgs e)
@@ -25,42 +25,173 @@ namespace SDLXLIFFlocker
             selectFolderDialog.Description = "Select a folder with Trados sdlxliff files";
             if (selectFolderDialog.ShowDialog(this) == DialogResult.OK)
             {
-                textBoxFolderPath.Text = selectFolderDialog.SelectedPath;                 
+                textBoxFolderPath.Text = selectFolderDialog.SelectedPath;
             }
         }
 
-        private async void lock100Matches(object sender, EventArgs e)
-        {            
+        private async void lockUnlock(object sender, EventArgs e)
+        {
+
             if (Directory.Exists(textBoxFolderPath.Text))
             {
+                string text;
+                if (((Button)sender).Text == "Lock 100%")
+                {
+                    text  = "Locked";
+                }
+                else
+                {
+                    text = "Unlocked";
+                }
+                enableControls(false);
+                int filesProcessed = await lockUnlockAsync(text);
+                enableControls(true);
+                textBoxLog.AppendText(String.Format("Done! Files processed: {0}\r\n", filesProcessed.ToString()));
+            }
+            else
+            {
+                MessageBox.Show(this, String.Format("Invalid path: {0}", textBoxFolderPath.Text), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
+        }
+
+        async Task<int> lockUnlockAsync(string text)
+        {
+            return await Task.Run(() =>
+            {
                 string[] sdlxliffFiles = Directory.GetFiles(textBoxFolderPath.Text, "*.sdlxliff", SearchOption.AllDirectories);
-                await Task.Run(() =>
+                foreach (string file in sdlxliffFiles)
+                {
+                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(file); });
+                    var sdlxliff = new SDLXLIFF(file);
+                    int[] results;
+                    if (text == "Locked")
                     {
-                        foreach (string file in sdlxliffFiles)
-                        {
-                            textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(file); });
-                            var sdlxliff = new SDLXLIFF(file);
-                            int[] results = sdlxliff.Lock100Matches();
-                            sdlxliff.Write();
-                            textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(String.Format(" - Locked {0} of {1}\r\n", results[0].ToString(), results[1].ToString())); });                        
-                        }
-                    });                    
-                 textBoxLog.AppendText(String.Format("Done! Files processed: {0}\r\n", sdlxliffFiles.Length));
+                        results = sdlxliff.Lock100Matches();
+                    }
+                    else
+                    {
+                        results = sdlxliff.Unlock();
+                    }
+                    sdlxliff.Write();
+                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(String.Format(" -- {0} {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString())); });
+                }
+                return sdlxliffFiles.Length;
+            });
+        }        
+
+        private async void checkSegments(object sender, EventArgs e)
+        {
+            if (Directory.Exists(textBoxFolderPath.Text))
+            {
+                string text;
+                if (((Button)sender).Text == "Check untranslated")
+                {
+                    text = "untranslated";
+                }
+                else
+                {
+                    text = "unreviewed";
+                }
+                enableControls(false);
+                int[] results = await checkSegmentsAsync(checkBoxIgnoreLocked.Checked, text);
+                enableControls(true);
+                textBoxLog.AppendText(String.Format("Done! Files with {0} segments: {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString()));
             }
             else
             {
                 MessageBox.Show(this, String.Format("Invalid path: {0}", textBoxFolderPath.Text), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+        }
+
+        async Task<int[]> checkSegmentsAsync(bool ignoreLocked, string text)
+        {
+            return await Task.Run(() =>
+            {
+                string[] sdlxliffFiles = Directory.GetFiles(textBoxFolderPath.Text, "*.sdlxliff", SearchOption.AllDirectories);
+                int filesWithErrors = 0;
+                foreach (string file in sdlxliffFiles)
+                {
+                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(file); });
+                    var sdlxliff = new SDLXLIFF(file);
+                    List<int> errorSegments;
+                    if (text == "untranslated")
+                    {
+                        errorSegments = sdlxliff.CheckUntranslated(ignoreLocked);
+                    }
+                    else
+                    {
+                        errorSegments = sdlxliff.CheckUnreviewed(ignoreLocked);
+                    }
+                    if (errorSegments.Count > 0)
+                    {
+                        filesWithErrors++;
+                        textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(String.Format(" -- Segments {0}: ", text)); });
+                        foreach (int segment in errorSegments)
+                        {
+                            textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(segment.ToString() + "; "); });
+                        }                        
+                    }
+                    else
+                    {
+                        textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(" -- OK"); });
+                    }
+                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText("\r\n"); });
+                }
+                return new int[] { filesWithErrors, sdlxliffFiles.Length };
+            });
         }        
 
-        private async void unlockSegments(object sender, EventArgs e)
-        {            
+        private async void saveLog(object sender, EventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "Save Log";
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt";
+            saveFileDialog.FileName = "sdlxlifLog";
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                using (var fileStream = File.Create(saveFileDialog.FileName))
+                {
+                    var writer = new StreamWriter(fileStream);
+                    await writer.WriteAsync(textBoxLog.Text);
+                    writer.Close();
+                }
+                textBoxLog.AppendText(String.Format("Log saved to {0}\r\n", saveFileDialog.FileName));
+            }
         }
 
         private void clearLog(object sender, EventArgs e)
         {
             textBoxLog.Clear();
-        } 
+        }
+
+        private void dragHandler(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }                
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }                
+        }
+
+        private void dropHandler(object sender, DragEventArgs e)
+        {
+            string[] pathArray = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            textBoxFolderPath.Text = pathArray[0];         
+        }
+
+        void enableControls(bool enabled = true)
+        {
+            buttonLockSegments.Enabled = enabled;
+            buttonUnlockSegments.Enabled = enabled;
+            buttonCheckUntranslated.Enabled = enabled;
+            buttonCheckUnreviewed.Enabled = enabled;
+            buttonSaveLog.Enabled = enabled;
+            buttonClearLog.Enabled = enabled;
+            buttonSelectFolder.Enabled = enabled;
+            checkBoxIgnoreLocked.Enabled = enabled;
+        }
     }
 }

@@ -36,18 +36,21 @@ namespace SDLXLIFFlocker
                     sdlseg.SetAttribute("locked", "true");
                 }
             }
-            return new int[2] { lockedCount, sdlsegTags.Count };
+            return new int[] { lockedCount, sdlsegTags.Count };
         }
 
-        public void Unlock()
+        public int[] Unlock()
         {
+            int unlockedCount = 0;
             foreach (XmlElement sdlseg in sdlsegTags)
             {
                 if (sdlseg.GetAttribute("locked") == "true")
                 {
+                    unlockedCount++;
                     sdlseg.RemoveAttribute("locked");
                 }                
             }
+            return new int[] { unlockedCount, sdlsegTags.Count };
         }
 
         public void Write()
@@ -60,14 +63,30 @@ namespace SDLXLIFFlocker
             }
         }
 
-        public List<int> CheckUntranslated(bool ignoreLocked = false)
+        public List<int> CheckUntranslated(bool ignoreLocked)
         {
             var untransList = new List<int>();
             int segment = 0;
             foreach (XmlElement sdlseg in sdlsegTags)
             {
                 segment++;
-                if (sdlseg.GetAttribute("conf") == "" && !(sdlseg.GetAttribute("locked") == "true" && ignoreLocked))
+                string confAttribute = sdlseg.GetAttribute("conf");
+                if ((confAttribute == "" || confAttribute == "Draft") && !(sdlseg.GetAttribute("locked") == "true" && ignoreLocked))
+                {
+                    untransList.Add(segment);
+                }
+            }
+            return untransList;
+        }
+
+        public List<int> CheckUnreviewed(bool ignoreLocked)
+        {
+            var untransList = new List<int>();
+            int segment = 0;
+            foreach (XmlElement sdlseg in sdlsegTags)
+            {
+                segment++;
+                if (sdlseg.GetAttribute("conf") != "ApprovedTranslation" && !(sdlseg.GetAttribute("locked") == "true" && ignoreLocked))
                 {
                     untransList.Add(segment);
                 }
