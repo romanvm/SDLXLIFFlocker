@@ -126,7 +126,7 @@
             this.textBoxLog.Name = "textBoxLog";
             this.textBoxLog.ReadOnly = true;
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxLog.Size = new System.Drawing.Size(792, 368);
+            this.textBoxLog.Size = new System.Drawing.Size(792, 392);
             this.textBoxLog.TabIndex = 9;
             this.textBoxLog.WordWrap = false;
             // 
@@ -156,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(809, 449);
+            this.ClientSize = new System.Drawing.Size(809, 471);
             this.Controls.Add(this.buttonCheckUnreviewed);
             this.Controls.Add(this.buttonClearLog);
             this.Controls.Add(this.textBoxLog);
@@ -171,7 +171,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SDLXLIFF Locker  v. 0.9.0";
+            this.Text = "SDLXLIFF Locker  v. 0.9.1";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -44,7 +44,10 @@ namespace SDLXLIFFlocker
                     text = "Unlocked";
                 }
                 enableControls(false);
+                textBoxLog.Cursor = Cursors.WaitCursor;                
+                Application.DoEvents();
                 int filesProcessed = await lockUnlockAsync(text);
+                textBoxLog.Cursor = Cursors.Default;                
                 enableControls(true);
                 textBoxLog.AppendText(String.Format("Done! Files processed: {0}\r\n", filesProcessed.ToString()));
             }
@@ -58,10 +61,13 @@ namespace SDLXLIFFlocker
         {
             return await Task.Run(() =>
             {
-                string[] sdlxliffFiles = Directory.GetFiles(textBoxFolderPath.Text, "*.sdlxliff", SearchOption.AllDirectories);
+                string[] sdlxliffFiles = Directory.GetFiles(textBoxFolderPath.Text, "*.sdlxliff", SearchOption.AllDirectories);                
                 foreach (string file in sdlxliffFiles)
                 {
-                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(file); });
+                    textBoxLog.Invoke((Action)delegate
+                    {
+                        textBoxLog.AppendText(file);
+                    });                    
                     var sdlxliff = new SDLXLIFF(file);
                     int[] results;
                     if (text == "Locked")
@@ -73,11 +79,14 @@ namespace SDLXLIFFlocker
                         results = sdlxliff.Unlock();
                     }
                     sdlxliff.Write();
-                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(String.Format(" -- {0} {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString())); });
+                    textBoxLog.Invoke((Action)delegate
+                    {
+                        textBoxLog.AppendText(String.Format(" -- {0} {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString()));
+                    });                    
                 }
                 return sdlxliffFiles.Length;
             });
-        }        
+        }
 
         private async void checkSegments(object sender, EventArgs e)
         {
@@ -93,7 +102,10 @@ namespace SDLXLIFFlocker
                     text = "unreviewed";
                 }
                 enableControls(false);
+                textBoxLog.Cursor = Cursors.WaitCursor;
+                Application.DoEvents();
                 int[] results = await checkSegmentsAsync(checkBoxIgnoreLocked.Checked, text);
+                textBoxLog.Cursor = Cursors.Default;
                 enableControls(true);
                 textBoxLog.AppendText(String.Format("Done! Files with {0} segments: {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString()));
             }
@@ -111,7 +123,10 @@ namespace SDLXLIFFlocker
                 int filesWithErrors = 0;
                 foreach (string file in sdlxliffFiles)
                 {
-                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(file); });
+                    textBoxLog.Invoke((Action)delegate
+                    {
+                        textBoxLog.AppendText(file);
+                    });
                     var sdlxliff = new SDLXLIFF(file);
                     List<int> errorSegments;
                     if (text == "untranslated")
@@ -125,17 +140,29 @@ namespace SDLXLIFFlocker
                     if (errorSegments.Count > 0)
                     {
                         filesWithErrors++;
-                        textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(String.Format(" -- Segments {0}: ", text)); });
+                        textBoxLog.Invoke((Action)delegate
+                        {
+                            textBoxLog.AppendText(String.Format(" -- Segments {0}: ", text));
+                        });
                         foreach (int segment in errorSegments)
                         {
-                            textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(segment.ToString() + "; "); });
+                            textBoxLog.Invoke((Action)delegate
+                            {
+                                textBoxLog.AppendText(segment.ToString() + "; ");
+                            });
                         }                        
                     }
                     else
                     {
-                        textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText(" -- OK"); });
+                        textBoxLog.Invoke((Action)delegate
+                        {
+                            textBoxLog.AppendText(" -- OK");
+                        });
                     }
-                    textBoxLog.Invoke((Action)delegate { textBoxLog.AppendText("\r\n"); });
+                    textBoxLog.Invoke((Action)delegate
+                    {
+                        textBoxLog.AppendText("\r\n");
+                    });
                 }
                 return new int[] { filesWithErrors, sdlxliffFiles.Length };
             });
