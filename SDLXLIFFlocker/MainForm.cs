@@ -16,6 +16,7 @@ namespace SDLXLIFFlocker
         public MainForm()
         {
             InitializeComponent();
+            comboBoxSelectStatus.SelectedIndex = 2;
         }
 
         private void selectFolder(object sender, EventArgs e)
@@ -29,7 +30,7 @@ namespace SDLXLIFFlocker
             }
         }
 
-        private async void lockUnlock(object sender, EventArgs e)
+        private async void lockUnlockChangeStatus(object sender, EventArgs e)
         {
 
             if (Directory.Exists(textBoxFolderPath.Text))
@@ -39,17 +40,21 @@ namespace SDLXLIFFlocker
                 {
                     text  = "Locked";
                 }
-                else
+                else if (((Button)sender).Text == "Unlock")
                 {
                     text = "Unlocked";
+                }
+                else
+                {
+                    text = comboBoxSelectStatus.Text;
                 }
                 enableControls(false);
                 textBoxLog.Cursor = Cursors.WaitCursor;                
                 Application.DoEvents();
-                int filesProcessed = await lockUnlockAsync(text);
+                int filesProcessed = await lockUnlockChangeStatusAsync(text);               
                 textBoxLog.Cursor = Cursors.Default;                
                 enableControls(true);
-                textBoxLog.AppendText(String.Format("Done! Files processed: {0}\r\n", filesProcessed.ToString()));
+                textBoxLog.AppendText(String.Format("Finised. Files processed: {0}\r\n", filesProcessed.ToString()));
             }
             else
             {
@@ -57,7 +62,7 @@ namespace SDLXLIFFlocker
             }            
         }
 
-        async Task<int> lockUnlockAsync(string text)
+        async Task<int> lockUnlockChangeStatusAsync(string text)
         {
             return await Task.Run(() =>
             {
@@ -69,19 +74,29 @@ namespace SDLXLIFFlocker
                         textBoxLog.AppendText(file);
                     });                    
                     var sdlxliff = new SDLXLIFF(file);
-                    int[] results;
-                    if (text == "Locked")
+                    string logMessage;
+                    if (text == "Locked" || text == "Unlocked")
                     {
-                        results = sdlxliff.Lock100Matches();
+                        int[] results;
+                        if (text == "Locked")
+                        {
+                            results = sdlxliff.Lock100Matches();
+                        }
+                        else
+                        {
+                            results = sdlxliff.Unlock();
+                        }
+                        logMessage = String.Format(" -- {0} {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString());
                     }
                     else
                     {
-                        results = sdlxliff.Unlock();
+                        sdlxliff.ChangeSegmentStatus(text);
+                        logMessage = " -- done \r\n";
                     }
                     sdlxliff.Write();
                     textBoxLog.Invoke((Action)delegate
                     {
-                        textBoxLog.AppendText(String.Format(" -- {0} {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString()));
+                        textBoxLog.AppendText(logMessage);
                     });                    
                 }
                 return sdlxliffFiles.Length;
@@ -107,7 +122,7 @@ namespace SDLXLIFFlocker
                 int[] results = await checkSegmentsAsync(checkBoxIgnoreLocked.Checked, text);
                 textBoxLog.Cursor = Cursors.Default;
                 enableControls(true);
-                textBoxLog.AppendText(String.Format("Done! Files with {0} segments: {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString()));
+                textBoxLog.AppendText(String.Format("Finished. Files with {0} segments: {1} of {2}\r\n", text, results[0].ToString(), results[1].ToString()));
             }
             else
             {
@@ -219,6 +234,6 @@ namespace SDLXLIFFlocker
             buttonClearLog.Enabled = enabled;
             buttonSelectFolder.Enabled = enabled;
             checkBoxIgnoreLocked.Enabled = enabled;
-        }
+        }       
     }
 }

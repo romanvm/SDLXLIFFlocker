@@ -39,6 +39,22 @@ namespace SDLXLIFFlocker
             return new int[] { lockedCount, sdlsegTags.Count };
         }
 
+        public void ChangeSegmentStatus(string status)
+        {            
+            foreach(XmlElement sdlseg in sdlsegTags)
+            {
+                if (status != "Untranslated")
+                {
+                    
+                    sdlseg.SetAttribute("conf", status);
+                }
+                else
+                {
+                    sdlseg.RemoveAttribute("conf");
+                }
+            }
+        }
+
         public int[] Unlock()
         {
             int unlockedCount = 0;
@@ -81,17 +97,17 @@ namespace SDLXLIFFlocker
 
         public List<int> CheckUnreviewed(bool ignoreLocked)
         {
-            var untransList = new List<int>();
+            var unrevList = new List<int>();
             int segment = 0;
             foreach (XmlElement sdlseg in sdlsegTags)
             {
                 segment++;
                 if (sdlseg.GetAttribute("conf") != "ApprovedTranslation" && !(sdlseg.GetAttribute("locked") == "true" && ignoreLocked))
                 {
-                    untransList.Add(segment);
+                    unrevList.Add(segment);
                 }
             }
-            return untransList;
+            return unrevList;
         }
     }
 }
