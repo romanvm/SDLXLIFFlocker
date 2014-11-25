@@ -185,7 +185,7 @@
             this.groupBox2.Size = new System.Drawing.Size(264, 112);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Check";
+            this.groupBox2.Text = "Status";
             // 
             // groupBox3
             // 
