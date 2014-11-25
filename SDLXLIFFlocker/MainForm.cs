@@ -51,7 +51,7 @@ namespace SDLXLIFFlocker
                 enableControls(false);
                 textBoxLog.Cursor = Cursors.WaitCursor;                
                 Application.DoEvents();
-                int filesProcessed = await lockUnlockChangeStatusAsync(text);               
+                int filesProcessed = await lockUnlockChangeStatusAsync(text, checkBoxIgnoreLocked.Checked);               
                 textBoxLog.Cursor = Cursors.Default;                
                 enableControls(true);
                 textBoxLog.AppendText(String.Format("Finised. Files processed: {0}\r\n", filesProcessed.ToString()));
@@ -62,7 +62,7 @@ namespace SDLXLIFFlocker
             }            
         }
 
-        async Task<int> lockUnlockChangeStatusAsync(string text)
+        async Task<int> lockUnlockChangeStatusAsync(string text, bool ignoreLocked)
         {
             return await Task.Run(() =>
             {
@@ -90,7 +90,7 @@ namespace SDLXLIFFlocker
                     }
                     else
                     {
-                        sdlxliff.ChangeSegmentStatus(text);
+                        sdlxliff.ChangeSegmentStatus(text, ignoreLocked);
                         logMessage = " -- done \r\n";
                     }
                     sdlxliff.Write();

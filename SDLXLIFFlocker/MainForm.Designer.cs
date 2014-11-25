@@ -45,12 +45,10 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxSelectStatus = new System.Windows.Forms.ComboBox();
             this.buttonChangeStatus = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonSelectFolder
@@ -80,7 +78,7 @@
             this.textBoxFolderPath.AllowDrop = true;
             this.textBoxFolderPath.Location = new System.Drawing.Point(112, 8);
             this.textBoxFolderPath.Name = "textBoxFolderPath";
-            this.textBoxFolderPath.Size = new System.Drawing.Size(464, 20);
+            this.textBoxFolderPath.Size = new System.Drawing.Size(448, 20);
             this.textBoxFolderPath.TabIndex = 2;
             this.toolTip.SetToolTip(this.textBoxFolderPath, "Drag and drop a folder with sdlxlif files here.");
             this.textBoxFolderPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropHandler);
@@ -137,7 +135,7 @@
             this.textBoxLog.Name = "textBoxLog";
             this.textBoxLog.ReadOnly = true;
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxLog.Size = new System.Drawing.Size(568, 392);
+            this.textBoxLog.Size = new System.Drawing.Size(552, 376);
             this.textBoxLog.TabIndex = 9;
             this.textBoxLog.WordWrap = false;
             // 
@@ -176,12 +174,15 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.buttonChangeStatus);
             this.groupBox2.Controls.Add(this.buttonCheckUntranslated);
+            this.groupBox2.Controls.Add(this.comboBoxSelectStatus);
             this.groupBox2.Controls.Add(this.buttonCheckUnreviewed);
+            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.checkBoxIgnoreLocked);
             this.groupBox2.Location = new System.Drawing.Point(152, 40);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(136, 112);
+            this.groupBox2.Size = new System.Drawing.Size(264, 112);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Check";
@@ -190,7 +191,7 @@
             // 
             this.groupBox3.Controls.Add(this.buttonClearLog);
             this.groupBox3.Controls.Add(this.buttonSaveLog);
-            this.groupBox3.Location = new System.Drawing.Point(440, 40);
+            this.groupBox3.Location = new System.Drawing.Point(424, 40);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(136, 112);
             this.groupBox3.TabIndex = 14;
@@ -207,14 +208,14 @@
             "Translated",
             "ApprovedTranslation",
             "ApprovedSignOff"});
-            this.comboBoxSelectStatus.Location = new System.Drawing.Point(8, 48);
+            this.comboBoxSelectStatus.Location = new System.Drawing.Point(136, 48);
             this.comboBoxSelectStatus.Name = "comboBoxSelectStatus";
             this.comboBoxSelectStatus.Size = new System.Drawing.Size(120, 21);
             this.comboBoxSelectStatus.TabIndex = 15;
             // 
             // buttonChangeStatus
             // 
-            this.buttonChangeStatus.Location = new System.Drawing.Point(8, 80);
+            this.buttonChangeStatus.Location = new System.Drawing.Point(136, 80);
             this.buttonChangeStatus.Name = "buttonChangeStatus";
             this.buttonChangeStatus.Size = new System.Drawing.Size(120, 23);
             this.buttonChangeStatus.TabIndex = 16;
@@ -222,22 +223,10 @@
             this.buttonChangeStatus.UseVisualStyleBackColor = true;
             this.buttonChangeStatus.Click += new System.EventHandler(this.lockUnlockChangeStatus);
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Controls.Add(this.comboBoxSelectStatus);
-            this.groupBox4.Controls.Add(this.buttonChangeStatus);
-            this.groupBox4.Location = new System.Drawing.Point(296, 40);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(136, 112);
-            this.groupBox4.TabIndex = 17;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Change status";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 24);
+            this.label1.Location = new System.Drawing.Point(136, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 15);
             this.label1.TabIndex = 17;
@@ -247,8 +236,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 560);
-            this.Controls.Add(this.groupBox4);
+            this.ClientSize = new System.Drawing.Size(569, 545);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -265,8 +253,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -290,7 +276,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox comboBoxSelectStatus;
         private System.Windows.Forms.Button buttonChangeStatus;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label1;
     }
 }

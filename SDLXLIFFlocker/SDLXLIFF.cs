@@ -39,19 +39,22 @@ namespace SDLXLIFFlocker
             return new int[] { lockedCount, sdlsegTags.Count };
         }
 
-        public void ChangeSegmentStatus(string status)
+        public void ChangeSegmentStatus(string status, bool ignoreLocked)
         {            
             foreach(XmlElement sdlseg in sdlsegTags)
             {
-                if (status != "Untranslated")
+                if (!(sdlseg.GetAttribute("locked") == "true" && ignoreLocked))
                 {
-                    
-                    sdlseg.SetAttribute("conf", status);
-                }
-                else
-                {
-                    sdlseg.RemoveAttribute("conf");
-                }
+                    if (status != "Untranslated")
+                    {
+
+                        sdlseg.SetAttribute("conf", status);
+                    }
+                    else
+                    {
+                        sdlseg.RemoveAttribute("conf");
+                    }
+                }                
             }
         }
 
@@ -67,17 +70,7 @@ namespace SDLXLIFFlocker
                 }                
             }
             return new int[] { unlockedCount, sdlsegTags.Count };
-        }
-
-        public void Write()
-        {
-            using (FileStream fileStream = File.Create(filePath))
-            {
-                var writer = new XmlTextWriter(fileStream, Encoding.UTF8);
-                sdlxliff.WriteContentTo(writer);
-                writer.Flush();
-            }
-        }
+        }        
 
         public List<int> CheckUntranslated(bool ignoreLocked)
         {
@@ -108,6 +101,16 @@ namespace SDLXLIFFlocker
                 }
             }
             return unrevList;
+        }
+
+        public void Write()
+        {
+            using (FileStream fileStream = File.Create(filePath))
+            {
+                var writer = new XmlTextWriter(fileStream, Encoding.UTF8);
+                sdlxliff.WriteContentTo(writer);
+                writer.Flush();
+            }
         }
     }
 }
