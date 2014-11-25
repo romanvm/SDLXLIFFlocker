@@ -80,7 +80,7 @@
             this.textBoxFolderPath.Name = "textBoxFolderPath";
             this.textBoxFolderPath.Size = new System.Drawing.Size(448, 20);
             this.textBoxFolderPath.TabIndex = 2;
-            this.toolTip.SetToolTip(this.textBoxFolderPath, "Drag and drop a folder with sdlxlif files here.");
+            this.toolTip.SetToolTip(this.textBoxFolderPath, "Drag and drop a folder with Trados sdlxlif files here.");
             this.textBoxFolderPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropHandler);
             this.textBoxFolderPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.dragHandler);
             // 
