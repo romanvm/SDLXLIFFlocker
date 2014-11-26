@@ -234,6 +234,8 @@ namespace SDLXLIFFlocker
             buttonClearLog.Enabled = enabled;
             buttonSelectFolder.Enabled = enabled;
             checkBoxIgnoreLocked.Enabled = enabled;
+            comboBoxSelectStatus.Enabled = enabled;
+            buttonChangeStatus.Enabled = enabled;
         }       
     }
 }
