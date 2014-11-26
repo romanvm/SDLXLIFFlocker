@@ -42,10 +42,10 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.comboBoxSelectStatus = new System.Windows.Forms.ComboBox();
             this.buttonChangeStatus = new System.Windows.Forms.Button();
+            this.comboBoxSelectStatus = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -187,16 +187,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Status";
             // 
-            // groupBox3
+            // buttonChangeStatus
             // 
-            this.groupBox3.Controls.Add(this.buttonClearLog);
-            this.groupBox3.Controls.Add(this.buttonSaveLog);
-            this.groupBox3.Location = new System.Drawing.Point(424, 40);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(136, 112);
-            this.groupBox3.TabIndex = 14;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Log";
+            this.buttonChangeStatus.Location = new System.Drawing.Point(136, 80);
+            this.buttonChangeStatus.Name = "buttonChangeStatus";
+            this.buttonChangeStatus.Size = new System.Drawing.Size(120, 23);
+            this.buttonChangeStatus.TabIndex = 16;
+            this.buttonChangeStatus.Text = "Change status";
+            this.toolTip.SetToolTip(this.buttonChangeStatus, "Set selected status for all segments in all files in the folder.");
+            this.buttonChangeStatus.UseVisualStyleBackColor = true;
+            this.buttonChangeStatus.Click += new System.EventHandler(this.lockUnlockChangeStatus);
             // 
             // comboBoxSelectStatus
             // 
@@ -212,16 +212,7 @@
             this.comboBoxSelectStatus.Name = "comboBoxSelectStatus";
             this.comboBoxSelectStatus.Size = new System.Drawing.Size(120, 21);
             this.comboBoxSelectStatus.TabIndex = 15;
-            // 
-            // buttonChangeStatus
-            // 
-            this.buttonChangeStatus.Location = new System.Drawing.Point(136, 80);
-            this.buttonChangeStatus.Name = "buttonChangeStatus";
-            this.buttonChangeStatus.Size = new System.Drawing.Size(120, 23);
-            this.buttonChangeStatus.TabIndex = 16;
-            this.buttonChangeStatus.Text = "Change status";
-            this.buttonChangeStatus.UseVisualStyleBackColor = true;
-            this.buttonChangeStatus.Click += new System.EventHandler(this.lockUnlockChangeStatus);
+            this.toolTip.SetToolTip(this.comboBoxSelectStatus, "Select status to set.");
             // 
             // label1
             // 
@@ -231,6 +222,17 @@
             this.label1.Size = new System.Drawing.Size(70, 15);
             this.label1.TabIndex = 17;
             this.label1.Text = "New status:";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.buttonClearLog);
+            this.groupBox3.Controls.Add(this.buttonSaveLog);
+            this.groupBox3.Location = new System.Drawing.Point(424, 40);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(136, 112);
+            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Log";
             // 
             // MainForm
             // 
@@ -248,7 +250,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SDLXLIFF Locker  v. 0.9.2";
+            this.Text = "SDLXLIFF Locker  v. 0.9.3";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
