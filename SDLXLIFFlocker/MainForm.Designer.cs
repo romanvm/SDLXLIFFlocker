@@ -40,10 +40,10 @@
             this.buttonClearLog = new System.Windows.Forms.Button();
             this.buttonCheckUnreviewed = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonChangeStatus = new System.Windows.Forms.Button();
             this.comboBoxSelectStatus = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
@@ -137,6 +137,7 @@
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBoxLog.Size = new System.Drawing.Size(552, 376);
             this.textBoxLog.TabIndex = 9;
+            this.toolTip.SetToolTip(this.textBoxLog, "Log window.");
             this.textBoxLog.WordWrap = false;
             // 
             // buttonClearLog
@@ -160,32 +161,6 @@
             this.toolTip.SetToolTip(this.buttonCheckUnreviewed, "Check for segments without \"Translation Approved\" status.");
             this.buttonCheckUnreviewed.UseVisualStyleBackColor = true;
             this.buttonCheckUnreviewed.Click += new System.EventHandler(this.checkSegments);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.buttonLockSegments);
-            this.groupBox1.Controls.Add(this.buttonUnlockSegments);
-            this.groupBox1.Location = new System.Drawing.Point(8, 40);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(136, 112);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Lock / unlock";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.buttonChangeStatus);
-            this.groupBox2.Controls.Add(this.buttonCheckUntranslated);
-            this.groupBox2.Controls.Add(this.comboBoxSelectStatus);
-            this.groupBox2.Controls.Add(this.buttonCheckUnreviewed);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.checkBoxIgnoreLocked);
-            this.groupBox2.Location = new System.Drawing.Point(152, 40);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(264, 112);
-            this.groupBox2.TabIndex = 13;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Status";
             // 
             // buttonChangeStatus
             // 
@@ -213,6 +188,32 @@
             this.comboBoxSelectStatus.Size = new System.Drawing.Size(120, 21);
             this.comboBoxSelectStatus.TabIndex = 15;
             this.toolTip.SetToolTip(this.comboBoxSelectStatus, "Select status to set.");
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.buttonLockSegments);
+            this.groupBox1.Controls.Add(this.buttonUnlockSegments);
+            this.groupBox1.Location = new System.Drawing.Point(8, 40);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(136, 112);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Lock / unlock";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.buttonChangeStatus);
+            this.groupBox2.Controls.Add(this.buttonCheckUntranslated);
+            this.groupBox2.Controls.Add(this.comboBoxSelectStatus);
+            this.groupBox2.Controls.Add(this.buttonCheckUnreviewed);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.checkBoxIgnoreLocked);
+            this.groupBox2.Location = new System.Drawing.Point(152, 40);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(264, 112);
+            this.groupBox2.TabIndex = 13;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Status";
             // 
             // label1
             // 
