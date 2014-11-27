@@ -46,6 +46,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonLockCM = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -68,8 +69,8 @@
             this.buttonLockSegments.Name = "buttonLockSegments";
             this.buttonLockSegments.Size = new System.Drawing.Size(120, 23);
             this.buttonLockSegments.TabIndex = 1;
-            this.buttonLockSegments.Text = "Lock 100%";
-            this.toolTip.SetToolTip(this.buttonLockSegments, "Lock all pre-translated 100% matches.");
+            this.buttonLockSegments.Text = "Lock CM+100%";
+            this.toolTip.SetToolTip(this.buttonLockSegments, "Lock all pre-translated 100% and context \r\nmatches.");
             this.buttonLockSegments.UseVisualStyleBackColor = true;
             this.buttonLockSegments.Click += new System.EventHandler(this.lockUnlockChangeStatus);
             // 
@@ -191,6 +192,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonLockCM);
             this.groupBox1.Controls.Add(this.buttonLockSegments);
             this.groupBox1.Controls.Add(this.buttonUnlockSegments);
             this.groupBox1.Location = new System.Drawing.Point(8, 40);
@@ -235,6 +237,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Log";
             // 
+            // buttonLockCM
+            // 
+            this.buttonLockCM.Location = new System.Drawing.Point(8, 16);
+            this.buttonLockCM.Name = "buttonLockCM";
+            this.buttonLockCM.Size = new System.Drawing.Size(120, 23);
+            this.buttonLockCM.TabIndex = 4;
+            this.buttonLockCM.Text = "Lock CM";
+            this.toolTip.SetToolTip(this.buttonLockCM, "Lock all pre-translated context matches.");
+            this.buttonLockCM.UseVisualStyleBackColor = true;
+            this.buttonLockCM.Click += new System.EventHandler(this.lockUnlockChangeStatus);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,7 +264,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SDLXLIFF Locker  v. 0.9.3";
+            this.Text = "SDLXLIFF Locker  v. 1.0.0";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -280,6 +293,7 @@
         private System.Windows.Forms.ComboBox comboBoxSelectStatus;
         private System.Windows.Forms.Button buttonChangeStatus;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonLockCM;
     }
 }
 

@@ -25,12 +25,12 @@ namespace SDLXLIFFlocker
             sdlsegTags = sdlxliff.GetElementsByTagName("sdl:seg");
         }
 
-        public int[] Lock100Matches()
+        public int[] Lock100Matches(bool include100PerCent)
         {
             int lockedCount = 0;
             foreach (XmlElement sdlseg in sdlsegTags)
             {                
-                if (sdlseg.GetAttribute("percent") == "100" && sdlseg.GetAttribute("origin") == "tm"  && sdlseg.GetAttribute("locked") != "true")
+                if (sdlseg.GetAttribute("percent") == "100" && sdlseg.GetAttribute("origin") == "tm" && (sdlseg.GetAttribute("text-match") == "SourceAndTarget" || include100PerCent) && sdlseg.GetAttribute("locked") != "true")
                 {
                     lockedCount++;
                     sdlseg.SetAttribute("locked", "true");

@@ -32,13 +32,18 @@ namespace SDLXLIFFlocker
 
         private async void lockUnlockChangeStatus(object sender, EventArgs e)
         {
-
             if (Directory.Exists(textBoxFolderPath.Text))
             {
                 string text;
-                if (((Button)sender).Text == "Lock 100%")
+                bool include100PerCent = false;
+                if (((Button)sender).Text == "Lock CM")
                 {
                     text  = "Locked";
+                }
+                else if (((Button)sender).Text == "Lock CM+100%")
+                {
+                    text = "Locked";
+                    include100PerCent = true;
                 }
                 else if (((Button)sender).Text == "Unlock")
                 {
@@ -51,7 +56,7 @@ namespace SDLXLIFFlocker
                 enableControls(false);
                 textBoxLog.Cursor = Cursors.WaitCursor;                
                 Application.DoEvents();
-                int filesProcessed = await lockUnlockChangeStatusAsync(text, checkBoxIgnoreLocked.Checked);               
+                int filesProcessed = await lockUnlockChangeStatusAsync(text, include100PerCent, checkBoxIgnoreLocked.Checked);               
                 textBoxLog.Cursor = Cursors.Default;                
                 enableControls(true);
                 textBoxLog.AppendText(String.Format("Finised. Files processed: {0}\r\n", filesProcessed.ToString()));
@@ -62,7 +67,7 @@ namespace SDLXLIFFlocker
             }            
         }
 
-        async Task<int> lockUnlockChangeStatusAsync(string text, bool ignoreLocked)
+        async Task<int> lockUnlockChangeStatusAsync(string text, bool include100PerCent, bool ignoreLocked)
         {
             return await Task.Run(() =>
             {
@@ -80,7 +85,7 @@ namespace SDLXLIFFlocker
                         int[] results;
                         if (text == "Locked")
                         {
-                            results = sdlxliff.Lock100Matches();
+                            results = sdlxliff.Lock100Matches(include100PerCent);
                         }
                         else
                         {
