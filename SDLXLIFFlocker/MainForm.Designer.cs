@@ -42,11 +42,11 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.buttonChangeStatus = new System.Windows.Forms.Button();
             this.comboBoxSelectStatus = new System.Windows.Forms.ComboBox();
+            this.buttonLockCM = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelNewstatus = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.buttonLockCM = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -190,6 +190,17 @@
             this.comboBoxSelectStatus.TabIndex = 15;
             this.toolTip.SetToolTip(this.comboBoxSelectStatus, "Select status to set.");
             // 
+            // buttonLockCM
+            // 
+            this.buttonLockCM.Location = new System.Drawing.Point(8, 16);
+            this.buttonLockCM.Name = "buttonLockCM";
+            this.buttonLockCM.Size = new System.Drawing.Size(120, 23);
+            this.buttonLockCM.TabIndex = 4;
+            this.buttonLockCM.Text = "Lock CM";
+            this.toolTip.SetToolTip(this.buttonLockCM, "Lock all pre-translated context matches.");
+            this.buttonLockCM.UseVisualStyleBackColor = true;
+            this.buttonLockCM.Click += new System.EventHandler(this.lockUnlockChangeStatus);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.buttonLockCM);
@@ -208,7 +219,7 @@
             this.groupBox2.Controls.Add(this.buttonCheckUntranslated);
             this.groupBox2.Controls.Add(this.comboBoxSelectStatus);
             this.groupBox2.Controls.Add(this.buttonCheckUnreviewed);
-            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.labelNewstatus);
             this.groupBox2.Controls.Add(this.checkBoxIgnoreLocked);
             this.groupBox2.Location = new System.Drawing.Point(152, 40);
             this.groupBox2.Name = "groupBox2";
@@ -217,14 +228,14 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Status";
             // 
-            // label1
+            // labelNewstatus
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(136, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 15);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "New status:";
+            this.labelNewstatus.AutoSize = true;
+            this.labelNewstatus.Location = new System.Drawing.Point(136, 24);
+            this.labelNewstatus.Name = "labelNewstatus";
+            this.labelNewstatus.Size = new System.Drawing.Size(70, 15);
+            this.labelNewstatus.TabIndex = 17;
+            this.labelNewstatus.Text = "New status:";
             // 
             // groupBox3
             // 
@@ -236,17 +247,6 @@
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Log";
-            // 
-            // buttonLockCM
-            // 
-            this.buttonLockCM.Location = new System.Drawing.Point(8, 16);
-            this.buttonLockCM.Name = "buttonLockCM";
-            this.buttonLockCM.Size = new System.Drawing.Size(120, 23);
-            this.buttonLockCM.TabIndex = 4;
-            this.buttonLockCM.Text = "Lock CM";
-            this.toolTip.SetToolTip(this.buttonLockCM, "Lock all pre-translated context matches.");
-            this.buttonLockCM.UseVisualStyleBackColor = true;
-            this.buttonLockCM.Click += new System.EventHandler(this.lockUnlockChangeStatus);
             // 
             // MainForm
             // 
@@ -264,7 +264,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SDLXLIFF Locker  v. 1.0.0";
+            this.Text = "SDLXLIFF Locker  v. 1.0.2";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -292,7 +292,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox comboBoxSelectStatus;
         private System.Windows.Forms.Button buttonChangeStatus;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelNewstatus;
         private System.Windows.Forms.Button buttonLockCM;
     }
 }

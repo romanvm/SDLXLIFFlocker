@@ -99,7 +99,7 @@ namespace SDLXLIFFlocker
                         logMessage = " -- done \r\n";
                     }
                     sdlxliff.Write();
-                    textBoxLog.Invoke((Action)delegate
+                    textBoxLog.Invoke((MethodInvoker)delegate
                     {
                         textBoxLog.AppendText(logMessage);
                     });                    
@@ -166,7 +166,7 @@ namespace SDLXLIFFlocker
                         });
                         foreach (int segment in errorSegments)
                         {
-                            textBoxLog.Invoke((Action)delegate
+                            textBoxLog.Invoke((MethodInvoker)delegate
                             {
                                 textBoxLog.AppendText(segment.ToString() + "; ");
                             });
@@ -174,7 +174,7 @@ namespace SDLXLIFFlocker
                     }
                     else
                     {
-                        textBoxLog.Invoke((Action)delegate
+                        textBoxLog.Invoke((MethodInvoker)delegate
                         {
                             textBoxLog.AppendText(" -- OK");
                         });
@@ -233,6 +233,7 @@ namespace SDLXLIFFlocker
         {
             buttonLockSegments.Enabled = enabled;
             buttonUnlockSegments.Enabled = enabled;
+            buttonLockCM.Enabled = enabled;
             buttonCheckUntranslated.Enabled = enabled;
             buttonCheckUnreviewed.Enabled = enabled;
             buttonSaveLog.Enabled = enabled;

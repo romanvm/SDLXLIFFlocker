@@ -30,7 +30,7 @@ namespace SDLXLIFFlocker
             int lockedCount = 0;
             foreach (XmlElement sdlseg in sdlsegTags)
             {                
-                if (sdlseg.GetAttribute("percent") == "100" && sdlseg.GetAttribute("origin") == "tm" && (sdlseg.GetAttribute("text-match") == "SourceAndTarget" || include100PerCent) && sdlseg.GetAttribute("locked") != "true")
+                if (sdlseg.GetAttribute("percent") == "100" && (sdlseg.GetAttribute("origin") == "tm" || sdlseg.GetAttribute("origin") == "auto-aligned") && (sdlseg.GetAttribute("text-match") == "SourceAndTarget" || include100PerCent) && sdlseg.GetAttribute("locked") != "true")
                 {
                     lockedCount++;
                     sdlseg.SetAttribute("locked", "true");
