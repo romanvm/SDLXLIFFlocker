@@ -59,7 +59,7 @@ namespace SDLXLIFFlocker
                 int filesProcessed = await lockUnlockChangeStatusAsync(text, include100PerCent, checkBoxIgnoreLocked.Checked);               
                 textBoxLog.Cursor = Cursors.Default;                
                 enableControls(true);
-                textBoxLog.AppendText(String.Format("Finised. Files processed: {0}\r\n", filesProcessed.ToString()));
+                textBoxLog.AppendText(String.Format("Finished. Files processed: {0}\r\n", filesProcessed.ToString()));
             }
             else
             {
